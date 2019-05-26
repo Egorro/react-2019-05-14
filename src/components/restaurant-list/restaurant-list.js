@@ -20,6 +20,7 @@ class RestaurantList extends Component {
 
     return (
       <List>
+        <div>Ваш заказ</div>
         {restaurants.map(restaurant => (
           <Restaurant
             key={restaurant.id}
@@ -28,6 +29,7 @@ class RestaurantList extends Component {
             toggleOpenMenu={toggleOpenItem}
           />
         ))}
+        <div>К оплате: 4000 руб.</div>
       </List>
     );
   }
