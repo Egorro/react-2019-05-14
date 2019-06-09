@@ -35,6 +35,7 @@ class Restaurant extends PureComponent {
         <List.Item
           className="restaurant-list-item"
           actions={[
+            <NavLink to={`/restaurant-map/${id}`}>Show on map</NavLink>,
             <AverageRating id={id} />,
             <Button
               data-automation-id={`toggle-review-list-${id}`}

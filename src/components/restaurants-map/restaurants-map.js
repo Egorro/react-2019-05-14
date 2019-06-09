@@ -6,12 +6,14 @@ import { connect } from "react-redux";
 import {
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
-  restaurantsSelector
+  restaurantsSelector,
+  restaurantSelector
 } from "../../selectors";
 import { loadRestaurants } from "../../ac";
 
 class RestaurantsMap extends Component {
   render() {
+    console.log(this.props);
     return <div ref={this.setEl} className="map" />;
   }
   setEl = ref => {
@@ -30,26 +32,30 @@ class RestaurantsMap extends Component {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+    this.renderTiles();
   }
   componentDidUpdate() {
     this.renderTiles();
   }
   renderTiles = () => {
-    this.props.restaurants.forEach(({ location: { lat, lng } }) => {
-      Leaflet.marker([lat, lng]).addTo(this.map);
-    });
+    const {
+      location: { lat, lng }
+    } = this.props.restaurant;
+    Leaflet.marker([lat, lng]).addTo(this.map);
   };
 }
 
 export default connect(
-  state => (
-    {
-      restaurants: restaurantsSelector(state),
+  (state, ownProps) => {
+    // debugger;
+    return {
+      restaurant: restaurantsSelector(state),
+      restaurant: restaurantSelector(state, ownProps),
       isRestaurantLoading: restaurantsLoadingSelector(state),
       isRestaurantLoaded: restaurantsLoadedSelector(state)
-    },
-    {
-      loadRestaurants
-    }
-  )
+    };
+  },
+  {
+    loadRestaurants
+  }
 )(RestaurantsMap);

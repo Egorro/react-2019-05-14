@@ -105,6 +105,7 @@ export const restaurantSelector = createSelector(
   restaurantsSelector,
   idSelector,
   (restaurants, id) => {
+    debugger;
     return restaurants.find(restaurant => restaurant.id === id);
   }
 );
